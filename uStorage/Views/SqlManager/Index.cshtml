@@ -1,0 +1,34 @@
+﻿@model uStorage.ViewModels.SqlManagerInfoModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>SQL Manager Information</h2>
+
+
+<fieldset>
+    <legend>SqlManagerInfoModel</legend>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.ConnString)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.ConnString, new { @style = "width: 500px;" })
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.ConnectionTestResult)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.ConnectionTestResult)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.ErrorInfo)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.ErrorInfo, new { style = "width: 500px;" })
+    </div>
+</fieldset>
+
