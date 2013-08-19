@@ -1,7 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uStorage", "uStorage\uStorage.csproj", "{8A255896-4AD6-493B-BBEC-C23D7A1BDCF7}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.20623.1 VSUPREVIEW
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uStorage.Web", "uStorage\uStorage.Web.csproj", "{8A255896-4AD6-493B-BBEC-C23D7A1BDCF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uStorage.Core", "uStorage.Core\uStorage.Core.csproj", "{6B743758-B61E-49E9-A09D-9744C6861EA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uStorage.Interfaces", "uStorage.Interfaces\uStorage.Interfaces.csproj", "{6C9E6B21-DFAD-413F-A05E-02205C7A6695}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{ABCD673D-DD98-4CAE-BB24-4B0F9A33C0EB}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,6 +26,14 @@ Global
 		{8A255896-4AD6-493B-BBEC-C23D7A1BDCF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A255896-4AD6-493B-BBEC-C23D7A1BDCF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A255896-4AD6-493B-BBEC-C23D7A1BDCF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B743758-B61E-49E9-A09D-9744C6861EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B743758-B61E-49E9-A09D-9744C6861EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B743758-B61E-49E9-A09D-9744C6861EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B743758-B61E-49E9-A09D-9744C6861EA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C9E6B21-DFAD-413F-A05E-02205C7A6695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C9E6B21-DFAD-413F-A05E-02205C7A6695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C9E6B21-DFAD-413F-A05E-02205C7A6695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C9E6B21-DFAD-413F-A05E-02205C7A6695}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

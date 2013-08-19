@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
-using uStorage.ViewModels;
+using uStorage.Web.ViewModels;
 
-namespace uStorage.Controllers
+namespace uStorage.Web.Controllers
 {
     public class HomeController : Controller
     {
@@ -21,6 +21,22 @@ namespace uStorage.Controllers
                 });
             
             return View(model.OrderBy(x => x.Name));
+        }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(LoginModel model)
+        {
+            return null;
+        }
+
+        public ActionResult AddTable()
+        {
+            return View();
         }
     }
 }

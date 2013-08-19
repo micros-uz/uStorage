@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace uStorage.ViewModels
+
+namespace uStorage.Web.ViewModels
 {
     public class SqlManagerInfoModel
     {

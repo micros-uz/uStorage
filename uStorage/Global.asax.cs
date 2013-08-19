@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElFinder.Sample.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,6 +7,11 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using uStorage.Core;
+using uStorage.Web.Controllers;
+using uStorage.Web.Logic;
+using uStorage.Web.Web.Controllers.Api;
+using WrapIoC;
 
 namespace uStorage
 {
@@ -22,6 +28,15 @@ namespace uStorage
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            CoreBootstrapper.Initialize();
+
+            //ControllerBuilder.Current.SetControllerFactory(new ControllerFactory());
+
+            IoC.Current.Register<IController, FilesController>("Files");
+            IoC.Current.Register<IController, IndexController>("Index");
+            IoC.Current.Register<IController, SqlManagerController>("SqlManager");
+            IoC.Current.Register<IController, HomeController>("Home");
         }
     }
 }

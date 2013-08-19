@@ -2,31 +2,31 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Web.Mvc;
-using uStorage.Web.ViewModels;
+using uStorage.Interfaces.Services;
 
-namespace uStorage.Web.Controllers
+namespace uStorage.Core.Services
 {
-    public class SqlManagerController : Controller
+    internal class SqlService : ISqlCRUDService
     {
-        public ActionResult Index()
+        #region ISqlService
+        Tuple<bool, string> ISqlCRUDService.TestConnection()
         {
             var connStr = ConfigurationManager.ConnectionStrings["HostingMSSQLSRVConnection"];
-            var model = new SqlManagerInfoModel();
+            var isConnected = false;
+            var errInfo = string.Empty;
 
             if (connStr != null)
             {
-                model.ConnString = connStr.ConnectionString;
                 var conn = new SqlConnection(connStr.ConnectionString);
 
                 try
                 {
                     conn.Open();
-                    model.ConnectionTestResult = true;
+                    isConnected = true;
                 }
                 catch (Exception ex)
                 {
-                    model.ErrorInfo = ex.Message;
+                    errInfo = ex.Message;
                 }
                 finally
                 {
@@ -37,7 +37,10 @@ namespace uStorage.Web.Controllers
                 }
             }
 
-            return View(model);
+            return Tuple.Create(isConnected, errInfo);
+            
         }
+
+        #endregion
     }
 }

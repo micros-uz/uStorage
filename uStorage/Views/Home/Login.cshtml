@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+
+<input type="text" size="14" id="login" name="login"/>
+<br>
+<input type="password" size="14" id="pwd" name="password" />
+<br>
+<button onclick="goLogin();">Go!</button>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script type="text/javascript">
+    function goLogin() {
+        jQuery.support.cors = true;
+
+        var loginModel = {
+            UserName: $('#login').val(),
+            Password: $('#pwd').val()
+        }
+
+        $.ajax({
+            url: '/api/account/login',
+            type: 'POST',
+            data: JSON.stringify(loginModel),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                alert(data);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+
+</script>
+    
