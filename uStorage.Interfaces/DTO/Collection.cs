@@ -2,7 +2,7 @@
 
 namespace uStorage.Interfaces.DTO
 {
-    public class Table
+    public class Collection
     {
         public string Name { get; set; }
         public IEnumerable<Column> Columns { get; set; }

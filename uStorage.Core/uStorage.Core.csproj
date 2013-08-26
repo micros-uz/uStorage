@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.8.2\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.8.2\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
     </Reference>
@@ -40,10 +46,11 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.XML" />
-    <Reference Include="WrapIoC, Version=0.9.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="WrapIoC, Version=0.9.6.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WrapIoC.0.9.4\lib\WrapIoC.dll</HintPath>
+      <HintPath>..\packages\WrapIoC.0.9.6.0\lib\WrapIoC.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -51,8 +58,8 @@
     <Compile Include="DAL\DbManager.cs" />
     <Compile Include="IoC\NinjectIoC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\SqlDDLService.cs" />
-    <Compile Include="Services\SqlService.cs" />
+    <Compile Include="Services\LogManager.cs" />
+    <Compile Include="Services\StorageService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\uStorage.Interfaces\uStorage.Interfaces.csproj">

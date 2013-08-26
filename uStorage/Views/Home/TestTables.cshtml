@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "AddTable";
+}
+
+<h2>Test Tables</h2>
+
+<fieldset>
+    <legend>Add New Tabkle</legend>
+    <label for="tbName">Table Name</label>
+    <input type="text" size="15" id="tbName" />
+    <br><br>
+
+    <table id="tb">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Primary key</th>
+                <th>Not Null</th>
+                <th>Unique</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <br>
+    <button id="addCol">Add Column</button>
+    <button id="addTable">Add Table</button>
+</fieldset>
+
+<fieldset>
+    <legend>Delete Table</legend>
+    <label for="tbName2">Table Name</label>
+    <input type="text" size="15" id="tbName2" />
+    <button id="delTable">Delete</button>
+</fieldset>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script type="text/javascript">
+    function makeAjax(url, data) {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                if (data.length == 0)
+                    data = "OK";
+                alert(data);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+    
+
+    function addRow() {
+        $("#tb").append('<tr class="row"><td><input type="text" size="15" class="colName" /></td><td><input type="text" size="15" class="colType" /></td><td><input type="checkbox" class="isPk" /></td>                <td><input type="checkbox" class ="isNotNull" /></td><td><input type="checkbox" class ="isUnique" /></td><td><a href="javascript:void(0);"class="remCF">Remove</a></td></tr>');
+    }
+
+    $(document).ready(function () {
+        addRow();
+
+        $("#addCol").click(function () {
+            addRow();
+            $(".remCF").on('click', function () {
+                $(this).parent().parent().remove();
+            });
+        });
+
+        $('#addTable').click(function () {
+            jQuery.support.cors = true;
+            var err = false;
+            var colArray = new Array();
+
+            $('#tb > tbody  > tr').each(function () {
+                $this = $(this);
+
+                var col = {
+                    Title: $this.find("input.colName").val(),
+                    Type: $this.find("input.colType").val(),
+                    IsPrimaryKey: $this.find("input.isPk").is(':checked'),
+                    IsNotNull: $this.find("input.isNotNull").is(':checked'),
+                    IsUnique: $this.find("input.isUnique").is(':checked')
+                };
+
+                if (col.Title.length == 0 || col.Type.length == 0) {
+                    alert('Wrong Column!');
+                    err = true;
+                    return false;
+                }
+                else {
+                    colArray.push(col);
+                };
+            });
+
+            if (!err && colArray.length > 0) {
+                var table = {
+                    Name: $('#tbName').val(),
+                    Columns: colArray
+                };
+
+                var table = {
+                    Name: $('#tbName').val(),
+                    Columns: colArray
+                };
+
+                makeAjax('/api/sqlddl/addtable', table);
+            }
+        });
+
+        $('#delTable').click(function () {
+            var table = {
+                Name: $('#tbName2').val()
+            };
+
+            if (table.Name.length == 0) {
+                alert('Wrong table Name');
+            } else {
+                makeAjax('/api/sqlddl/deltable', table);
+            }
+
+        });
+    });
+</script>

@@ -17,7 +17,7 @@ namespace uStorage.Web.Logic
 
             try
             {
-                res = IoC.Current.Get<IController>(controllerName);
+                res = IoC.Current.Get<IController>(controllerName.ToLowerInvariant());
             }
             catch (IoCException)
             {

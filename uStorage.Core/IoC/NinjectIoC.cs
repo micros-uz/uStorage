@@ -1,4 +1,5 @@
 ﻿using Ninject;
+using System;
 using WrapIoC;
 
 namespace uStorage.Core.IoC
@@ -46,6 +47,23 @@ namespace uStorage.Core.IoC
             {
                 throw new IoCException(ex.Message);
             }
+        }
+
+        object IIoC.Get(Type type)
+        {
+            try
+            {
+                return _Kernel.Get(type);
+            }
+            catch (ActivationException ex)
+            {
+                throw new IoCException(ex.Message);
+            }
+        }
+
+        bool IIoC.Release(object obj)
+        {
+            return true;
         }
 
         #endregion

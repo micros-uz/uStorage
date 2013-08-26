@@ -1,29 +1,36 @@
-﻿using System.Linq;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using uStorage.Core.DAL;
 using uStorage.Interfaces.DTO;
 using uStorage.Interfaces.Services;
-using System.Data;
-using System;
-using System.Data.SqlClient;
+using System.Linq;
 
 namespace uStorage.Core.Services
 {
-    public class SqlDDLService : ISqlDDLService
+    internal class StorageService : IStorageService
     {
+        private IStorageService This
+        {
+            get
+            {
+                return this;
+            }
+        }
         private string MakeColumnsQuery(IEnumerable<Column> columns)
         {
             var res = string.Empty;
 
             foreach (var col in columns)
             {
-                var pk = col.IsPrimaryKey 
-                    ? (col.Type == "int" 
-                        ? "identity(1, 1) primary key" 
+                var pk = col.IsPrimaryKey
+                    ? (col.Type == "int"
+                        ? "identity(1, 1) primary key"
                         : RaiseError()
-                    ) 
+                    )
                     : col.IsNotNull
-                        ? "not null" 
+                        ? "not null"
                         : "null";
 
                 var unique = col.IsUnique ? "unique" : string.Empty;
@@ -42,26 +49,26 @@ namespace uStorage.Core.Services
 
         #region ISqlDDLService
 
-        IEnumerable<Table> ISqlDDLService.GetTables()
+        IEnumerable<Collection> IStorageService.GetCollections()
         {
-            var res = new List<Table>();
+            var res = new List<Collection>();
 
             try
             {
-                var table = DbManager.ExecuteTable("select * from INFORMATION_SCHEMA.TABLES");
+                var table = DbManager.ExecuteTable("select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME not like '%{580947B8-E295-4D6C-9E80-FB889A8EB640}'");
 
                 if (table != null)
                 {
                     foreach (DataRow row in table.Rows)
                     {
-                        res.Add(new Table
+                        res.Add(new Collection
                         {
                             Name = row[2].ToString()
                         });
                     }
                 }
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
 
             }
@@ -69,7 +76,7 @@ namespace uStorage.Core.Services
             return res;
         }
 
-        string ISqlDDLService.AddTable(Table table)
+        string IStorageService.AddCollection(Collection table)
         {
             var res = string.Empty;
             var columns = MakeColumnsQuery(table.Columns);
@@ -77,22 +84,7 @@ namespace uStorage.Core.Services
             try
             {
                 DbManager.ExecuteNonQuery(string.Format("create table [dbo].[{0}] ({1})", table.Name, columns));
-            }
-            catch(SqlException ex)
-            {
-                res = ex.Message;
-            }
-
-            return res;
-        }
-
-        string ISqlDDLService.DeleteTable(Table table)
-        {
-            var res = string.Empty;
-
-            try
-            {
-                DbManager.ExecuteNonQuery(string.Format("drop table {0}", table.Name));
+                LogManager.Log("Add table", table.Name, null);
             }
             catch (SqlException ex)
             {
@@ -102,14 +94,38 @@ namespace uStorage.Core.Services
             return res;
         }
 
-        void ISqlDDLService.AddColumn(Table table, Column column)
+        string IStorageService.DeleteCollection(Collection table)
         {
-            throw new System.NotImplementedException();
+            var res = string.Empty;
+
+            try
+            {
+                DbManager.ExecuteNonQuery(string.Format("drop table {0}", table.Name));
+                LogManager.Log("Delete table", table.Name, null);
+            }
+            catch (SqlException ex)
+            {
+                res = ex.Message;
+            }
+
+            return res;
         }
 
-        void ISqlDDLService.DeleteColumn(Table table, Column column)
+        Tuple<bool, string> IStorageService.TestConnection()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        string IStorageService.AddObject(string collectionName, object obj)
+        {
+            var collection = This.GetCollections().FirstOrDefault(x => x.Name == collectionName);
+
+            if (collection == null)
+            {
+
+            }
+
+            return null;
         }
 
         #endregion

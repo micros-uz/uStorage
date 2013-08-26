@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Dispatcher;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using uStorage.Core;
+using uStorage.Logic;
 using uStorage.Web.Controllers;
 using uStorage.Web.Logic;
 using uStorage.Web.Web.Controllers.Api;
@@ -31,12 +33,21 @@ namespace uStorage
 
             CoreBootstrapper.Initialize();
 
-            //ControllerBuilder.Current.SetControllerFactory(new ControllerFactory());
+            ControllerBuilder.Current.SetControllerFactory(new ControllerFactory());
 
-            IoC.Current.Register<IController, FilesController>("Files");
-            IoC.Current.Register<IController, IndexController>("Index");
-            IoC.Current.Register<IController, SqlManagerController>("SqlManager");
-            IoC.Current.Register<IController, HomeController>("Home");
+            // mvc controllers
+            IoC.Current.Register<IController, FilesController>("files");
+            IoC.Current.Register<IController, IndexController>("index");
+            IoC.Current.Register<IController, SqlManagerController>("sqlmanager");
+            IoC.Current.Register<IController, HomeController>("home");
+            // api controllers
+            IoC.Current.Register<AccountController, AccountController>();
+            IoC.Current.Register<StorageController, StorageController>();
+            
+            GlobalConfiguration.Configuration.Services.Replace(
+
+                typeof(IHttpControllerActivator), new HttpControllerActivator(IoC.Current));
+
         }
     }
 }

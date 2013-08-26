@@ -10,7 +10,7 @@ namespace uStorage.Core
         public static void Initialize()
         {
             WrapIoC.IoC.Init(new NinjectIoC());
-            WrapIoC.IoC.Current.Register<ISqlCRUDService, SqlService>();
+            WrapIoC.IoC.Current.Register<IStorageService, StorageService>();
         }
     }
 }
